@@ -41,11 +41,59 @@
   color: #888;
 }
 
+:root {
+  --board-border-color: #333;
+  --board-light-square: #eeeed2;
+  --board-dark-square: #769656;
+  --board-selected: #baca44;
+  --board-valid-move: rgba(0, 0, 0, 0.2);
+  --piece-red: #ff0000;
+  --piece-black: #000000;
+  --text-color: #213547;
+  --background-color: #ffffff;
+}
+
+.dark-theme {
+  --board-border-color: #666;
+  --board-light-square: #4a4a4a;
+  --board-dark-square: #2d2d2d;
+  --board-selected: #4a4a4a;
+  --board-valid-move: rgba(255, 255, 255, 0.2);
+  --text-color: #ffffff;
+  --background-color: #242424;
+}
+
 .app {
   max-width: 800px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  color: var(--text-color);
+  background-color: var(--background-color);
+  min-height: 100vh;
+  transition: all 0.3s ease;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.theme-toggle {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
+}
+
+.theme-toggle:hover {
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 .game {
@@ -64,8 +112,11 @@
 .board {
   display: flex;
   flex-direction: column;
-  border: 2px solid #333;
+  border: 2px solid var(--board-border-color);
+  border-radius: 8px;
+  overflow: hidden;
   width: fit-content;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .board-row {
@@ -80,18 +131,19 @@
   align-items: center;
   cursor: pointer;
   position: relative;
+  transition: background-color 0.2s ease;
 }
 
 .square.black {
-  background-color: #769656;
+  background-color: var(--board-dark-square);
 }
 
 .square:not(.black) {
-  background-color: #eeeed2;
+  background-color: var(--board-light-square);
 }
 
 .square.selected {
-  background-color: #baca44;
+  background-color: var(--board-selected);
 }
 
 .square.valid-move::after {
@@ -100,23 +152,28 @@
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: var(--board-valid-move);
 }
 
 .piece {
   width: 45px;
   height: 45px;
   border-radius: 50%;
-  border: 2px solid #333;
+  border: 2px solid var(--board-border-color);
   position: relative;
+  transition: transform 0.2s ease;
+}
+
+.piece:hover {
+  transform: scale(1.05);
 }
 
 .piece.red {
-  background-color: #ff0000;
+  background-color: var(--piece-red);
 }
 
 .piece.black {
-  background-color: #000000;
+  background-color: var(--piece-black);
 }
 
 .piece.king::after {
@@ -141,14 +198,15 @@
   font-weight: bold;
   padding: 0.5rem 1rem;
   border-radius: 4px;
+  transition: all 0.3s ease;
 }
 
 .score.red {
-  color: #ff0000;
+  color: var(--piece-red);
   background-color: rgba(255, 0, 0, 0.1);
 }
 
 .score.black {
-  color: #000000;
+  color: var(--piece-black);
   background-color: rgba(0, 0, 0, 0.1);
 }
