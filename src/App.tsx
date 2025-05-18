@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import Game from './components/Game'
+import { Game } from './components/Game'
 import './App.css'
 
 function App() {
@@ -15,12 +15,12 @@ function App() {
 
   return (
     <div className="app">
-      <div className="header">
+      <header className="header">
         <h1 className="game-title">Шашки</h1>
         <button className="theme-toggle" onClick={toggleTheme}>
           {isDarkTheme ? '☀️' : '🌙'}
         </button>
-      </div>
+      </header>
       <Game />
     </div>
   )

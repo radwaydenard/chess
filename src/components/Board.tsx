@@ -1,39 +1,15 @@
 import React from 'react';
 import type { Piece } from '../types';
-import Square from './Square';
+import { Square } from './Square';
 
 interface BoardProps {
-  board: (Piece | null)[][];
-  onSquareClick: (row: number, col: number) => void;
-  selectedSquare: [number, number] | null;
-  validMoves: [number, number][];
+  children: React.ReactNode;
 }
 
-const Board: React.FC<BoardProps> = ({ board, onSquareClick, selectedSquare, validMoves }) => {
+export const Board: React.FC<BoardProps> = ({ children }) => {
   return (
     <div className="board">
-      {board.map((row, rowIndex) => (
-        <div key={rowIndex} className="board-row">
-          {row.map((piece, colIndex) => {
-            const isSelected = selectedSquare?.[0] === rowIndex && selectedSquare?.[1] === colIndex;
-            const isValidMove = validMoves.some(
-              ([r, c]) => r === rowIndex && c === colIndex
-            );
-            return (
-              <Square
-                key={`${rowIndex}-${colIndex}`}
-                piece={piece}
-                isBlack={(rowIndex + colIndex) % 2 === 1}
-                onClick={() => onSquareClick(rowIndex, colIndex)}
-                isSelected={isSelected}
-                isValidMove={isValidMove}
-              />
-            );
-          })}
-        </div>
-      ))}
+      {children}
     </div>
   );
-};
-
-export default Board; 
+}; 

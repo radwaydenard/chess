@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;700&display=swap');
 
 #root {
   max-width: 1280px;
@@ -82,12 +82,13 @@ body.light-theme {
   --board-border-color: #333;
   --board-light-square: #eeeed2;
   --board-dark-square: #769656;
-  --board-selected: #baca44;
+  --board-selected: rgba(255, 255, 255, 0.1);
   --board-valid-move: rgba(0, 0, 0, 0.2);
   --text-color: #213547;
   --background-color: #ffffff;
   --neon-red: #ff0000;
   --neon-black: #000000;
+  --modal-button-text: #ffffff;
 }
 
 body.dark-theme {
@@ -99,7 +100,8 @@ body.dark-theme {
   --text-color: #ffffff;
   --background-color: #242424;
   --neon-red: #ff3333;
-  --neon-black: #ffffff;
+  --neon-black: #333333;
+  --modal-button-text: #ffffff;
 }
 
 .app {
@@ -128,8 +130,9 @@ body.dark-theme {
 }
 
 .game-title {
+  font-family: 'Inter', sans-serif;
   font-size: clamp(2rem, 5vw, 3rem);
-  font-weight: bold;
+  font-weight: 700;
   color: var(--text-color);
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -293,11 +296,11 @@ body.dark-theme {
 }
 
 .piece.red {
-  background-color: var(--piece-red);
+  background-color: var(--neon-red);
 }
 
 .piece.black {
-  background-color: var(--piece-black);
+  background-color: var(--neon-black);
 }
 
 .piece.king::after {
@@ -332,15 +335,15 @@ body.dark-theme {
 }
 
 .score.red {
-  color: var(--piece-red);
+  color: var(--neon-red);
   background-color: rgba(255, 0, 0, 0.1);
-  border: 1px solid var(--piece-red);
+  border: 1px solid var(--neon-red);
 }
 
 .score.black {
-  color: var(--piece-black);
+  color: var(--neon-black);
   background-color: rgba(0, 0, 0, 0.1);
-  border: 1px solid var(--piece-black);
+  border: 1px solid var(--neon-black);
 }
 
 @media (max-width: 480px) {
@@ -363,4 +366,150 @@ body.dark-theme {
   .score {
     padding: 0.3rem;
   }
+}
+
+.winner-message {
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-weight: bold;
+  color: var(--text-color);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin: 1rem 0;
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.debug-toggle {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+
+.debug-toggle:hover {
+  background: rgba(0, 0, 0, 0.7);
+  transform: translateY(-2px);
+}
+
+.debug-panel {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 1rem;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  z-index: 1000;
+  animation: slideUp 0.3s ease;
+}
+
+.debug-panel button {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.debug-panel button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateX(-2px);
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Модальное окно */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: var(--background-color);
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  min-width: 300px;
+}
+
+.modal-title {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+  color: var(--text-color);
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.modal-button {
+  padding: 0.5rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.modal-button.confirm {
+  background-color: var(--neon-red);
+  color: white;
+  border: none;
+}
+
+.modal-button.confirm:hover {
+  background-color: #cc0000;
+}
+
+.modal-button.cancel {
+  background-color: transparent;
+  color: var(--text-color);
+  border: 1px solid var(--text-color);
+}
+
+.modal-button.cancel:hover {
+  background-color: rgba(0, 0, 0, 0.1);
 }
