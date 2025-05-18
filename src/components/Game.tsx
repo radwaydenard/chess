@@ -122,7 +122,11 @@ const Game: React.FC = () => {
           <div className="score red">Красные: {scores.red}</div>
           <div className="score black">Черные: {scores.black}</div>
         </div>
-        <div>Текущий ход: {currentPlayer === 'red' ? 'Красные' : 'Черные'}</div>
+        <div>
+          Текущий ход: <span className={`current-player ${currentPlayer}`}>
+            {currentPlayer === 'red' ? 'Красные' : 'Черные'}
+          </span>
+        </div>
       </div>
       <Board
         board={board}

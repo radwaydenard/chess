@@ -1,19 +1,22 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Game from './components/Game'
 import './App.css'
 
 function App() {
   const [isDarkTheme, setIsDarkTheme] = useState(true);
 
+  useEffect(() => {
+    document.body.className = isDarkTheme ? 'dark-theme' : 'light-theme';
+  }, [isDarkTheme]);
+
   const toggleTheme = () => {
     setIsDarkTheme(!isDarkTheme);
-    document.body.classList.toggle('light-theme');
   };
 
   return (
-    <div className={`app ${isDarkTheme ? 'dark-theme' : 'light-theme'}`}>
+    <div className="app">
       <div className="header">
-        <h1>Шашки</h1>
+        <h1 className="game-title">Шашки</h1>
         <button className="theme-toggle" onClick={toggleTheme}>
           {isDarkTheme ? '☀️' : '🌙'}
         </button>
