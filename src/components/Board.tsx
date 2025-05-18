@@ -1,6 +1,6 @@
 import React from 'react';
-import Square from './Square';
 import type { Piece } from '../types';
+import Square from './Square';
 
 interface BoardProps {
   board: (Piece | null)[][];

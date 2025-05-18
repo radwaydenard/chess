@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Board from './Board';
-import type { Board as BoardType, Piece } from '../types';
+import type { Board as BoardType } from '../types';
 
 const BOARD_SIZE = 8;
 
